@@ -6,13 +6,13 @@ const SYSTEM_PROMPT = `You are a symptom-logging assistant. Convert the user's d
  "notes":string}
 Rules: never invent details the user did not state. Use null when unknown. Severity is 0-10. The user may write in any language; always output English symptom names. Do not diagnose or give medical advice.`;
 
-export async function callLLM(userText) {
+export async function callLLM(userText, systemPrompt = SYSTEM_PROMPT) {
   const url = `https://generativelanguage.googleapis.com/v1beta/models/${process.env.LLM_MODEL}:generateContent?key=${process.env.LLM_API_KEY}`;
   const res = await fetch(url, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
-      systemInstruction: { parts: [{ text: SYSTEM_PROMPT }] },
+      systemInstruction: { parts: [ { text: systemPrompt }] },
       contents: [{ role: "user", parts: [{ text: userText }] }],
       generationConfig: { temperature: 0.2, responseMimeType: "application/json" },
     }),
@@ -54,4 +54,17 @@ export async function parseSymptoms(text) {
       if (attempt === 1) throw e;
     }
   }
+}const REPORT_PROMPT = `You help a patient prepare for a doctor's appointment. You receive JSON with symptom statistics and rule-based pattern flags from the patient's own logs.
+Return JSON only: {"summary": string, "doctorQuestions": [string]}
+Rules: summary is at most 120 words, neutral and factual, written for a clinician, and uses ONLY the data provided. Never diagnose, never name a condition, never recommend treatment. doctorQuestions has at most 6 short questions the patient could ask her doctor, based on the flags.`;
+
+export async function summarizeForDoctor(payload) {
+  const raw = await callLLM(JSON.stringify(payload), REPORT_PROMPT);
+  const obj = JSON.parse(raw.replace(/```json|```/g, "").trim());
+  return {
+    summary: String(obj.summary || ""),
+    doctorQuestions: Array.isArray(obj.doctorQuestions)
+      ? obj.doctorQuestions.map(String).slice(0, 6)
+      : [],
+  };
 }
