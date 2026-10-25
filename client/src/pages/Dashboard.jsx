@@ -13,7 +13,7 @@ import {
 import { api } from "../api";
 
 // true = backend illama sample data. Backend ready aanadhum false aakkunga.
-const USE_MOCK = true;
+const USE_MOCK = false;
 
 function makeMock() {
   const series = [];

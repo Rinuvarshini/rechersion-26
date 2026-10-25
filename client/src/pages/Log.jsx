@@ -2,7 +2,7 @@ import { useState } from "react";
 import { api } from "../api";
 
 // true = backend illama test panna. Backend ready aanadhum false aakkunga.
-const USE_MOCK = true;
+const USE_MOCK = false;
 
 const emptyDraft = {
   symptoms: [],

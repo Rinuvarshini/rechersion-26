@@ -3,7 +3,7 @@ import { api } from "../api";
 import ShareCard from "../components/ShareCard";
 
 // true = backend illama sample report. Backend ready aanadhum false aakkunga.
-const USE_MOCK = true;
+const USE_MOCK = false;
 
 const MOCK_REPORT = {
   _id: "mock1",

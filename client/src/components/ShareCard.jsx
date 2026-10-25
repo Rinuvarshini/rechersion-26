@@ -3,7 +3,7 @@ import { QRCodeSVG } from "qrcode.react";
 import { api } from "../api";
 
 // true = backend illama sample link. Backend ready aanadhum false aakkunga.
-const USE_MOCK = true;
+const USE_MOCK = false;
 
 export default function ShareCard({ reportId }) {
   const [share, setShare] = useState(null);
