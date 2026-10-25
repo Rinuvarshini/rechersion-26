@@ -7,7 +7,7 @@ Women often wait years for a diagnosis because five minutes in a clinic isn't en
 Built for **recHERsion'26** (ACM-W, NITK Surathkal) | **Problem Statement 1: Women's Healthcare**
 
 **Team:** [Rinuvarshini](backend and AI), [Deepika T] (frontend), [Mahalakshmi R] (deployment and design)
-**Live demo:** [link] | **Demo video:** [link] | **Presentation:** [link]
+**Live demo:** [https://rechersion-26.vercel.app] | **Demo video:** [link] | **Presentation:** [link]
 
 ---
 
